@@ -92,6 +92,7 @@ public class Timezone
 
 public struct SDetailsData
 {
+    public string LargeImageURL;
     public string ImgURl;
     public string Email;
     public string PersonName;

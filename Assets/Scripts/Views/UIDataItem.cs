@@ -1,14 +1,12 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
-using UnityEngine.Networking;
-using System.Threading.Tasks;
-
+using UnityEngine.UI;
 public class UIDataItem : MonoBehaviour
 {
-    private string ImageURL;
-    private UnityEngine.UI.Button BtnGetDataDetails;
-    [SerializeField] private UnityEngine.UI.RawImage    PrintImage;
+    private SDetailsData                    DetailedData;
+    private string                          ImageURL;
+    private Button                          BtnGetDataDetails;
+    [SerializeField] private RawImage       PrintImage;
     [SerializeField] private TextMeshProUGUI            PrintName;
 
     private void Start()
@@ -18,6 +16,7 @@ public class UIDataItem : MonoBehaviour
     }
     public void InitData(SDetailsData _data, float _delay)
     {
+        DetailedData = _data;
         ImageURL            = _data.ImgURl;
         PrintName.text      = _data.PersonName;
         SetImage();
@@ -29,31 +28,6 @@ public class UIDataItem : MonoBehaviour
     }
     private void OnButtonPressed()
     {
-
-    }
-}
-
-public static class GetUrlImages
-{
-
-    public static async Task<Texture2D> DownloadImage(string _url)
-    {
-        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(_url))
-        {
-            var operation = www.SendWebRequest();
-            while (!operation.isDone)
-                await Task.Yield();
-
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                Texture2D texture = DownloadHandlerTexture.GetContent(www);
-                return texture;
-            }
-            else
-            {
-                Debug.LogError("Failed to download image: " + www.error);
-                return null;
-            }
-        }
+        EventsDictionary.UI_PRINT_DETAILS?.Invoke(DetailedData);
     }
 }

@@ -4,7 +4,6 @@ public class UIPrintPersonsData : MonoBehaviour
 {
     [SerializeField] private int ResultsAmount;
     [SerializeField] private UIDataItem     PrefabPrintDataItem;
-    [SerializeField] private UIDetails      PrintDetailsData;
     [SerializeField] private RectTransform  ImagesHolder;
     [SerializeField] private UnityEngine.UI.Button BtnGetallData;
 
@@ -24,6 +23,8 @@ public class UIPrintPersonsData : MonoBehaviour
             UIDataItem m_toPrint = Instantiate(PrefabPrintDataItem, ImagesHolder);
             SDetailsData m_Structure = new()
             {
+                LargeImageURL = _data.results[i].picture.Large,
+                ImgURl = _data.results[i].picture.Medium,
                 Age         = _data.results[i].Phone,
                 City        = _data.results[i].Location.City,
                 Email       = _data.results[i].Email,
